@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "111769515349",
+    "project_id": "articlely-f16de",
+    "storage_bucket": "articlely-f16de.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111769515349:android:f57ff344fb8bcf8fbf2bdc",
+        "android_client_info": {
+          "package_name": "com.example.articlely"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmHOu9MArxt5EiUj7NvCGXNgx2nBg1dbo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
