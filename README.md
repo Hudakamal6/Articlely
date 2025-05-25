@@ -14,6 +14,8 @@ Filter news by category
 
 Manage user authentication and profile
 
+Open aricle source on Google 
+
 Enjoy a responsive and smooth user experience
 
 This application is built with Clean Architecture, Bloc for State Management, and follows SOLID principles to ensure testability, scalability, and maintainability.
