@@ -3,7 +3,6 @@ import 'package:articlely/features/news/data/data_sources/news_remote_data_sourc
 import 'package:articlely/features/news/data/repositories/news_repo_impl.dart';
 import 'package:articlely/features/news/domain/repositories/news_repo.dart';
 import 'package:articlely/features/news/domain/use_cases/get_news_use_case.dart';
-import 'package:articlely/features/news/domain/use_cases/launch_url_use_case.dart';
 import 'package:articlely/features/news/presentation/manager/categories/categories_cubit.dart';
 import 'package:articlely/features/news/presentation/manager/news/news_cubit.dart';
 import 'package:get_it/get_it.dart';
@@ -14,10 +13,9 @@ class HomeServices {
 
   Future<void> initDi() async {
     sl.registerLazySingletonSafely(() => GetNewsUseCase(repo: sl()));
-    sl.registerLazySingletonSafely(() => LaunchUrlUseCase());
 
     sl.registerFactorySafely(
-        () => NewsCubit(getNewsUseCase: sl(), launchUrlUseCase: sl()));
+        () => NewsCubit(getNewsUseCase: sl(), ));
 
     sl.registerFactorySafely(() => CategoryCubit());
 

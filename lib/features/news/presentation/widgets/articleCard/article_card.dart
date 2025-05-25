@@ -1,8 +1,8 @@
-import 'package:articlely/core/helpers/helpers_functions.dart';
 import 'package:articlely/core/theme/color_manager.dart';
+import 'package:articlely/features/news/presentation/widgets/articleCard/see_article_details_button.dart';
 import 'package:flutter/material.dart';
-import '../../domain/entities/articles_entity.dart';
-import '../pages/article_details_screen.dart';
+import '../../../domain/entities/articles_entity.dart';
+import '../../pages/article_details_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ArticleCard extends StatelessWidget {
@@ -14,7 +14,7 @@ class ArticleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        showArticleDetails(context);
+       showArticleDetails(context);
       },
       child: Container(
         height: 170.h,
@@ -91,51 +91,9 @@ class ArticleCard extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: 7.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            HelpersFunctions.formatDate(
-                                article.publishedAt.toString()),
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 11.sp,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          SizedBox(
-                            width: 5.w,
-                          ),
-                          const Icon(Icons.alarm,
-                              size: 14, color: Colors.white),
-                        ],
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              ColorManager.babyBlue.withOpacity(0.4),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16.r),
-                          ),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 7.w, vertical: 1.h),
-                          elevation: 2,
-                        ),
-                        onPressed: () {
-                          showArticleDetails(context);
-                        },
-                        child: Text(
-                          'See Details',
-                          style: TextStyle(
-                            fontSize: 11.sp,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  SeeArticleDetailsButton(publishedAt: article.publishedAt.toString(),onPress:(){
+                    showArticleDetails(context);
+                  },)
                 ],
               ),
             )
@@ -144,7 +102,6 @@ class ArticleCard extends StatelessWidget {
       ),
     );
   }
-
   void showArticleDetails(BuildContext context) {
     showModalBottomSheet(
       context: context,
@@ -156,4 +113,6 @@ class ArticleCard extends StatelessWidget {
       builder: (_) => ArticleDetailsBottomSheet(article: article),
     );
   }
+
+
 }

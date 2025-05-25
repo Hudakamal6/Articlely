@@ -1,8 +1,13 @@
 import 'package:articlely/core/helpers/helpers_functions.dart';
 import 'package:articlely/core/theme/color_manager.dart';
+import 'package:articlely/features/news/presentation/widgets/articleDetails/author_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../domain/entities/articles_entity.dart';
+import '../widgets/articleDetails/article_date_widget.dart';
+import '../widgets/articleDetails/article_description_widget.dart';
+import '../widgets/articleDetails/article_image_widget.dart';
+import '../widgets/articleDetails/open_article_url_widget.dart';
 
 class ArticleDetailsBottomSheet extends StatelessWidget {
   final ArticleEntity article;
@@ -46,58 +51,16 @@ class ArticleDetailsBottomSheet extends StatelessWidget {
                     ),
                   ),
                 ),
-
-                if (article.urlToImage != null)
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(16.r),
-                    child: Image.network(
-                      article.urlToImage!,
-                      width: double.infinity,
-                      fit: BoxFit.contain,
-                    ),
+                if (article.description != null)
+                  ArticleImageWidget(
+                    articleImageUrl: article.urlToImage!,
                   ),
-
                 SizedBox(height: 16.h),
-
-                Row(
-                  children: [
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10.w, vertical: 6.h),
-                      decoration: BoxDecoration(
-                        color: ColorManager.babyBlue.withOpacity(0.3),
-                        borderRadius: BorderRadius.circular(16.r),
-                      ),
-                      child: Text(
-                        article.source.name,
-                        style: TextStyle(
-                          fontSize: 11.sp,
-                          fontWeight: FontWeight.w600,
-                          color: ColorManager.primaryColor,
-                        ),
-                      ),
-                    ),
-                    const Spacer(),
-                    Row(
-                      children: [
-                        const Icon(Icons.calendar_month,
-                            size: 14, color: ColorManager.primaryColor),
-                        SizedBox(width: 4.w),
-                        Text(
-                          HelpersFunctions.formatDate(
-                              article.publishedAt.toString()),
-                          style: TextStyle(
-                              fontSize: 11.sp,
-                              fontWeight: FontWeight.bold,
-                              color: ColorManager.primaryColor),
-                        ),
-                      ],
-                    ),
-                  ],
+                ArticleDateWidget(
+                  articlePublishedAt: article.publishedAt.toString(),
+                  articleSourceName: article.source.name,
                 ),
-
                 SizedBox(height: 12.h),
-
                 Text(
                   article.title,
                   style: TextStyle(
@@ -105,68 +68,15 @@ class ArticleDetailsBottomSheet extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-
                 SizedBox(height: 8.h),
-
                 if (article.author != null)
-                  Row(
-                    children: [
-                      const Icon(Icons.person,
-                          size: 18, color: ColorManager.primaryColor),
-                      SizedBox(width: 6.w),
-                      Text(
-                        article.author!,
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          color: Colors.grey.shade700,
-                        ),
-                      ),
-                    ],
-                  ),
-
+                  AuthorWidget(articleAuthor: article.author!),
                 SizedBox(height: 20.h),
-
                 if (article.description != null) ...[
-                  Container(
-                    width: double.infinity,
-                    margin: EdgeInsets.only(bottom: 20.h),
-                    padding: EdgeInsets.all(14.h),
-                    decoration: BoxDecoration(
-                      color: ColorManager.babyBlue.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(16.r),
-                      boxShadow: [
-                        BoxShadow(
-                          color: ColorManager.babyBlue.withOpacity(0.2),
-                          blurRadius: 8,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Description",
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.bold,
-                            color: ColorManager.primaryColor,
-                          ),
-                        ),
-                        SizedBox(height: 6.h),
-                        Text(
-                          article.description!,
-                          style: TextStyle(
-                            fontSize: 12.sp,
-                            color: Colors.black87,
-                            height: 1.5.h,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  ArticleDescriptionWidget(
+                    articleDescription: article.description!,
+                  )
                 ],
-
                 if (article.content != null) ...[
                   Text(
                     "Content",
@@ -189,31 +99,8 @@ class ArticleDetailsBottomSheet extends StatelessWidget {
                     ),
                   ),
                 ],
-
                 SizedBox(height: 28.h),
-
-                Center(
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      HelpersFunctions.launchURL(article.url);
-                    },
-                    icon: const Icon(Icons.open_in_new,
-                        color: ColorManager.primaryColor),
-                    label: const Text(
-                      'Read Full Article',
-                      style: TextStyle(color: ColorManager.primaryColor),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 24.w, vertical: 12.h),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16.r),
-                      ),
-                      backgroundColor: Colors.blue.shade50,
-                    ),
-                  ),
-                ),
-
+                OpenArticleUrlButton(articleUrl: article.url),
                 SizedBox(height: 20.h),
               ],
             ),

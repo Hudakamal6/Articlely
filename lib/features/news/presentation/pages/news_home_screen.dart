@@ -2,15 +2,16 @@ import 'dart:core';
 import 'package:articlely/core/theme/color_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../manager/news/news_cubit.dart';
-import '../widgets/article_card.dart';
-import '../widgets/categories_list_widget.dart';
-import '../widgets/custom_error_widget.dart';
-import '../widgets/custom_home_app_bar.dart';
-import '../widgets/search_text_field.dart';
-import '../widgets/shimmer_article_card.dart';
+import '../widgets/articleCard/article_card.dart';
+
+import '../widgets/articlesScreenComponents/categories_list_widget.dart';
+import '../widgets/articlesScreenComponents/custom_error_widget.dart';
+import '../widgets/articlesScreenComponents/custom_home_app_bar.dart';
+import '../widgets/articlesScreenComponents/empty_articles.dart';
+import '../widgets/articlesScreenComponents/search_text_field.dart';
+import '../widgets/articleCard/shimmer_article_card.dart';
 
 class NewsHomeScreen extends StatelessWidget {
   const NewsHomeScreen({super.key});
@@ -56,8 +57,7 @@ class NewsHomeScreen extends StatelessWidget {
                       itemBuilder: (context, index) =>
                           const ShimmerArticleCard(),
                     );
-                  }
-                  else if (state is GetNewsSuccess) {
+                  } else if (state is GetNewsSuccess) {
                     final articles = state.articles;
                     return Stack(children: [
                       ListView.builder(
@@ -91,33 +91,10 @@ class NewsHomeScreen extends StatelessWidget {
                             ),
                           ))
                     ]);
-                  }
-                  else if (state is GetNewsError) {
+                  } else if (state is GetNewsError) {
                     return const Center(child: CustomErrorWidget());
                   } else if (state is EmptyNews) {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(vertical: 50.0.h),
-                      child: Center(
-                          child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                              width: 200.w,
-                              height: 200.h,
-                              child: SvgPicture.asset(
-                                'assets/svgImages/no_search_result.svg',
-                                fit: BoxFit.cover,
-                              )),
-                          Text(
-                            'No Articles Found!',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15.sp,
-                                color: ColorManager.primaryColor),
-                          )
-                        ],
-                      )),
-                    );
+                    return const EmptyAriclesWidget();
                   }
 
                   return const SizedBox.shrink();

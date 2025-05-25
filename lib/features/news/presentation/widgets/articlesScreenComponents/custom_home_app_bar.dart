@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../core/helpers/helpers_functions.dart';
-import '../../../../core/theme/color_manager.dart';
-import '../manager/categories/categories_cubit.dart';
+import '../../../../../core/helpers/helpers_functions.dart';
+import '../../../../../core/theme/color_manager.dart';
+import '../../manager/categories/categories_cubit.dart';
 
 class CustomArticleAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomArticleAppBar({super.key});

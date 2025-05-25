@@ -1,6 +1,5 @@
 import 'package:articlely/features/news/domain/entities/articles_entity.dart';
 import 'package:articlely/features/news/domain/use_cases/get_news_use_case.dart';
-import 'package:articlely/features/news/domain/use_cases/launch_url_use_case.dart';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
@@ -8,13 +7,11 @@ part 'news_state.dart';
 
 class NewsCubit extends Cubit<NewsState> {
   final GetNewsUseCase getNewsUseCase;
-  final LaunchUrlUseCase launchUrlUseCase;
   List<ArticleEntity> _allArticles = [];
 
-  NewsCubit(
-      {required this.getNewsUseCase,
-      required this.launchUrlUseCase})
-      : super(NewsInitial());
+  NewsCubit({
+    required this.getNewsUseCase,
+  }) : super(NewsInitial());
 
   Future<void> getNews(String url) async {
     emit(GetNewsLoading());
@@ -32,15 +29,6 @@ class NewsCubit extends Cubit<NewsState> {
           emit(EmptyNews());
         }
       },
-    );
-  }
-
-  Future<void> openUrl(String url) async {
-    final result = await launchUrlUseCase(url);
-
-    result.fold(
-      (failure) => emit(LaunchUrlError(error: failure.message)),
-      (_) => emit(LaunchUrSuccess()),
     );
   }
 }
